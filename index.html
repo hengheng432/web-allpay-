@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-image: url('https://files.catbox.moe/xge91c.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        .payment-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+        }
+        
+        .payment-method {
+            margin-bottom: 25px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payment-method h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-method h2 i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .dana-logo {
+            color: #00B1F7;
+        }
+        
+        .qris-logo {
+            color: #5D2D8E;
+        }
+        
+        .payment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .payment-info {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-info .label {
+            font-weight: bold;
+            min-width: 100px;
+            color: #7f8c8d;
+        }
+        
+        .payment-info .value {
+            flex-grow: 1;
+            word-break: break-all;
+            color: #2c3e50;
+        }
+        
+        .copy-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .qr-code {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .qr-code img {
+            max-width: 200px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .qr-code p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 576px) {
+            .payment-container {
+                padding: 20px;
+            }
+            
+            .payment-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .payment-info .label {
+                min-width: auto;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="payment-container">
+        <div class="header">
+            <h1>Payment Gateway</h1>
+            <p>Choose your preferred payment method</p>
+        </div>
+        
+        <div class="payment-method">
+            <h2><i class="fas fa-wallet dana-logo"></i> DANA Payment</h2>
+            <div class="payment-details">
+                <div class="payment-info">
+                    <div class="label">DANA Number:</div>
+                    <div class="value">082142695995</div>
+                    <button class="copy-btn" onclick="copyToClipboard('082142695995')">Copy</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="payment-method">
+            <h2><i class="fas fa-qrcode qris-logo"></i> QRIS AllPay</h2>
+            <div class="payment-details">
+                <div class="qr-code">
+                    <img src="https://files.catbox.moe/qpebwd.jpeg" alt="QRIS AllPay">
+                    <p>Scan this QR code using your banking/mobile payment app</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p>After making the payment, please confirm by sending the payment receipt to our customer service.</p>
+            <p>Thank you for your purchase!</p>
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Copied to clipboard: ' + text);
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
